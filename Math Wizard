@@ -1,0 +1,661 @@
+#include<iostream>
+#include<windows.h>
+#include<stdlib.h>
+#include<math.h>
+                                                                              //By Vea Victoria
+//declares the void placed at the bottom
+void display();
+void display2();
+void instructions();
+void exits();
+void lose();
+
+using namespace std;                                              
+
+
+int main()
+{
+	//Displays title and the mainmenu
+
+	display(); //displays the void used for the title
+mainmenu:   //destination point to jump to main menu
+
+	int choice;
+	//displays mainmenu:
+	cout << "\n\t\t\t\t                           +++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+	cout << "\n\t\t\t\t                                          [1]Play " << endl;
+	cout << "\n\t\t\t\t                                          [2]Instructions" << endl;
+	cout << "\n\t\t\t\t                                          [3]Exit" << endl;
+	cout << "\n\t\t\t\t                           +++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+	cout << "\n\t\t\t\t                                          Your choice: ";
+	cin >> choice;
+
+	//switch to determine what to show depending on user's choice (mainmenu)
+	switch (choice)
+	{
+	case 1://goes to play when input is 1 (in mainmenu)
+	{
+		display2();//displays title without string
+	play://destination point to jump to play 
+		int choiceone;
+
+		//displays playmenu:
+		cout << "\n\t\t\t\t                           +++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+		cout << "\n\t\t\t\t                                          [1]Addition" << endl;
+		cout << "\n\t\t\t\t                                          [2]Subtraction" << endl;
+		cout << "\n\t\t\t\t                                          [3]Multiplication" << endl;
+		cout << "\n\t\t\t\t                                          [4]Division" << endl;
+		cout << "\n\t\t\t\t                           +++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+		cout << "\n\t\t\t\t                                                                              [0]Back to Main Menu" << endl;
+		cout << "\n\t\t\t\t                                          Your choice: ";
+		cin >> choiceone;
+		//switch to determine what to show depending on user's choice (play)
+		switch (choiceone)
+		{
+		case 1://chooses addition
+		{
+			int i = 0;
+			int losepoint = 0;
+			int hearts;
+			int heartsloop;
+
+			system("cls");
+			display2();
+			addhearts:
+			cout << "\n\t\t\t\t                           +++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+			cout << "\n\t\t\t\t                                    Enter how many hearts you want" << endl;
+			cout << "\n\t\t\t\t                                            per round (1-10)" << endl;
+			cout << "\n\t\t\t\t                           +++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+			cout << "\n\t\t\t\t                                                                              [0]Back to Play Menu" << endl;
+			cout << "\n\t\t\t\t                                          Your choice: ";
+			cin >> hearts;
+			if (hearts == 0)
+			{
+				display2(); 
+				goto play;
+			}
+			else if (hearts < 1 || hearts>10)
+			{
+				display2();
+				cout << "\n\t\t\t\t                                xxx||Error:Invalid Input.Try Again||xxx ";
+				goto addhearts; 
+				}
+		
+
+			do //to keep playing while hearts>0
+			{
+				system("cls"); //clears screen
+				display2();
+				i++; //variable to show how many times the loop was iterated and is also used to determine what question number it is.
+
+				//To generate a random number to be used for the question.
+				int a, b, ans,
+					srand(time(0));
+				a = rand() % 100 + 1;
+				b = rand() % 100 + 1;
+
+				//Used a loop to display amount of hearts
+				heartsloop = hearts; //the number of hearts, is number of times you loop to display "o".
+				cout << "\n\t\t\t       Hearts: ";
+				do {
+					cout << 'o';
+					heartsloop--;
+				} while (heartsloop > 0);
+
+				//displays addition question:
+				cout << "\n\t\t\t    +======================================================QUESTION " << i << "========================================================+\n";
+				cout << "\n\t\t\t    |                                                                                                                        |\n";
+				cout << "\n\t\t\t                                                            " << a << " + " << b << "                                                            \n";
+				cout << "\n\t\t\t    |                                                                                                                        |\n";
+				cout << "\n\t\t\t    +========================================================================================================================+\n";
+				cout << "\n\t\t\t\t                                                                                                 [0]Back to Main Menu" << endl;
+				cout << "\n\t\t\t\t                                          Your answer: ";
+				cin >> ans;
+				if (ans == 0) {//directs the user to mainmenu
+					display2();
+					goto mainmenu;
+				}
+				else if (ans != a + b)//lessens hearts when inputs wrong answer
+				{
+					hearts--;
+					losepoint--; //loses point in overall score
+				}
+			} while (hearts > 0);
+
+			//when loses
+			int choicelose;
+			system("cls"); //clears screen
+			cout << endl << endl << endl << endl << endl << endl << endl;
+		addlose: //destination point to lose in addition
+			cout << "\n\t\t\t                                                      ||YOUR SCORE:   " << i + losepoint << "  ||\n"; //displays score i is the number of iterations and losepoint is the number of points lost.
+			lose();//displays void lose.
+
+			//enables the user to go to play, mainmenu, or exits.
+			cout << "\n\t\t\t                                                                              [1]Play  [2]Back to Main Menu  [3]Exit ";
+			cout << "\n\t\t\t\t                                          Your choice: ";
+			cin >> choicelose;
+			switch (choicelose)
+			{
+			case 1://goes to play when input is 1
+			{
+				display2();
+				goto play;
+				break;
+			}
+			case 2://goes back to mainmenu when input is 2
+			{
+				display2();
+				goto mainmenu;
+				break;
+			}
+			case 3://goes to exits when input is 3
+			{
+				goto exits;
+				break;
+			}
+			default://displays error when input invalid
+			{
+				system("cls"); //clears screen
+				cout << endl << endl << endl << endl << endl << endl << endl;
+				cout << "\n\t\t\t                                              xxx||Error:Invalid Input.Try Again||xxx ";
+				goto addlose;
+				break;
+			}
+			}
+			break;
+		}
+		case 2://chooses subtraction
+		{
+			int i = 0;
+			int a, b, ans, losepoint = 0;
+			int hearts;
+			int heartsloop;
+
+			system("cls");
+			display2();
+			subhearts:
+			cout << "\n\t\t\t\t                           +++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+			cout << "\n\t\t\t\t                                    Enter how many hearts you want" << endl;
+			cout << "\n\t\t\t\t                                            per round (1-10)" << endl;
+			cout << "\n\t\t\t\t                           +++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+			cout << "\n\t\t\t\t                                                                              [0]Back to Play Menu" << endl;
+			cout << "\n\t\t\t\t                                          Your choice: ";
+			cin >> hearts;
+			if (hearts == 0)
+			{
+				display2(); 
+				goto play;
+			}
+			else if (hearts < 1 || hearts>10)
+			{
+				display2();
+				cout << "\n\t\t\t\t                                xxx||Error:Invalid Input.Try Again||xxx ";
+				goto subhearts; 
+				}
+		
+			do //to keep playing while hearts>0
+			{
+				system("cls"); //clears screen
+				display2();
+				i++; //variable to show how many times the loop was iterated and is also used to determine what question number it is.
+
+				srand(time(0));
+				//generates new number if existing numbers would result in a negative number or 0.
+				do {
+					a = rand() % 100 + 1;
+					b = rand() % 100 + 1;
+				} while (a - b <= 0);
+
+				//Used a loop to display amount of hearts
+				heartsloop = hearts;// the number of hearts, is number of times you loop to display "o".
+				cout << "\n\t\t\t       Hearts: ";
+				do {
+					cout << 'o';
+					heartsloop--;
+				} while (heartsloop > 0);
+
+				//displays subtraction question:
+				cout << "\n\t\t\t    +======================================================QUESTION " << i << "========================================================+\n";
+				cout << "\n\t\t\t    |                                                                                                                        |\n";
+				cout << "\n\t\t\t                                                            " << a << " - " << b << "                                                            \n";
+				cout << "\n\t\t\t    |                                                                                                                        |\n";
+				cout << "\n\t\t\t    +========================================================================================================================+\n";
+				cout << "\n\t\t\t\t                                                                                                 [0]Back to Main Menu" << endl;
+				cout << "\n\t\t\t\t                                          Your answer: ";
+				cin >> ans;
+				if (ans == 0) {//directs user to the mainmenu when the input is 0.
+					display2();
+					goto mainmenu;
+				}
+				else if (ans != a - b)//lessens hearts when inputs wrong answer
+				{
+					hearts--;
+					losepoint--; //loses point in overall score
+				}
+			} while (hearts > 0);
+			//when loses
+			int choicelose;
+			system("cls"); //clears screen
+			cout << endl << endl << endl << endl << endl << endl << endl;
+
+		sublose://destination point when lost in subtraction.
+			cout << "\n\t\t\t                                                      ||YOUR SCORE:   " << i + losepoint << "  ||\n"; //displays score i is the number of iterations and losepoint is the number of points lost.
+			lose();//displays void lose
+
+			//enables user to go to play, mainmenu, or exits:
+			cout << "\n\t\t\t                                                                              [1]Play  [2]Back to Main Menu  [3]Exit ";
+			cout << "\n\t\t\t\t                                          Your choice: ";
+			cin >> choicelose;
+			switch (choicelose)
+			{
+			case 1: //goes to play when input is 1 
+			{
+				display2();
+				goto play;
+				break;
+			}
+			case 2://goes back to mainmenu when input is 2
+			{
+				display2();
+				goto mainmenu;
+				break;
+			}
+			case 3://goes to exits when input is 3
+			{
+				goto exits;
+				break;
+			}
+			default://displays error when input invalid
+			{
+				system("cls"); //clears screen
+				cout << endl << endl << endl << endl << endl << endl << endl;
+				cout << "\n\t\t\t                                              xxx||Error:Invalid Input.Try Again||xxx ";
+				goto sublose;
+				break;
+			}
+			}
+			break;
+		}
+		case 3://chooses multiplication
+		{
+			int i = 0;
+			int a, b, ans, losepoint = 0;
+			int hearts;
+			int heartsloop;
+
+			system("cls");
+			display2();
+			multhearts:
+			cout << "\n\t\t\t\t                           +++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+			cout << "\n\t\t\t\t                                    Enter how many hearts you want" << endl;
+			cout << "\n\t\t\t\t                                            per round (1-10)" << endl;
+			cout << "\n\t\t\t\t                           +++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+			cout << "\n\t\t\t\t                                                                              [0]Back to Play Menu" << endl;
+			cout << "\n\t\t\t\t                                          Your choice: ";
+			cin >> hearts;
+			if (hearts == 0)
+			{
+				display2(); 
+				goto play;
+			}
+			else if (hearts < 1 || hearts>10)
+			{
+				display2();
+				cout << "\n\t\t\t\t                                xxx||Error:Invalid Input.Try Again||xxx ";
+				goto multhearts; 
+				}
+		
+			do//to keep playing while hearts>0
+			{
+				system("cls"); //clears screen
+				display2();
+				i++;//variable to show how many times the loop was iterated and is also used to determine what question number it is.
+
+				//To generate a random number to be used for the question:
+				srand(time(0));
+				a = rand() % 100 + 1;
+				b = rand() % 100 + 1;
+
+				//Used a loop to display amount of hearts:
+				heartsloop = hearts;
+				cout << "\n\t\t\t       Hearts: ";
+				do {
+					cout << 'o';
+					heartsloop--;
+				} while (heartsloop > 0);
+
+				//displays multiplication question:
+				cout << "\n\t\t\t    +======================================================QUESTION " << i << "========================================================+\n";
+				cout << "\n\t\t\t    |                                                                                                                        |\n";
+				cout << "\n\t\t\t                                                            " << a << " * " << b << "                                                            \n";
+				cout << "\n\t\t\t    |                                                                                                                        |\n";
+				cout << "\n\t\t\t    +========================================================================================================================+\n";
+				cout << "\n\t\t\t\t                                                                                                 [0]Back to Main Menu" << endl;
+				cout << "\n\t\t\t\t                                          Your answer: ";
+				cin >> ans;
+				if (ans == 0) {//directs the user to mainmenu
+					display2();
+					goto mainmenu;
+				}
+				else if (ans != a * b)//lessens hearts when inputs wrong answer
+				{
+					hearts--;
+					losepoint--; //loses point in overall score
+				}
+			} while (hearts > 0);
+			//when loses
+			int choicelose;
+			system("cls"); //clears screen
+			cout << endl << endl << endl << endl << endl << endl << endl;
+
+		multlose://destination point when loses in multiplication
+			cout << "\n\t\t\t                                                      ||YOUR SCORE:   " << i + losepoint << "  ||\n"; //displays score i is the number of iterations and losepoint is the number of points lost.
+			lose();//displays void lose.
+
+			//enables the user to go to play, mainmenu, or exits:
+			cout << "\n\t\t\t                                                                              [1]Play  [2]Back to Main Menu  [3]Exit ";
+			cout << "\n\t\t\t\t                                          Your choice: ";
+			cin >> choicelose;
+			switch (choicelose)
+			{
+			case 1://goes to play when input is 1 
+			{
+				display2();
+				goto play;
+				break;
+			}
+			case 2://goes back to mainmenu when input is 2
+			{
+				display2();
+				goto mainmenu;
+				break;
+			}
+			case 3://goes to exits when input is 3
+			{
+				goto exits;
+				break;
+			}
+			default://displays error when input invalid
+			{
+				system("cls"); //clears screen
+				cout << endl << endl << endl << endl << endl << endl << endl;
+				cout << "\n\t\t\t                                              xxx||Error:Invalid Input.Try Again||xxx ";
+				goto multlose;
+				break;
+			}
+			}
+			break;
+		}
+		case 4://chooses division
+		{
+			{
+				int i = 0;
+				int a, b, ans;
+				int losepoint = 0;
+				int hearts;
+				int heartsloop;
+
+				system("cls");
+				display2();
+			divhearts:
+				cout << "\n\t\t\t\t                           +++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+				cout << "\n\t\t\t\t                                    Enter how many hearts you want" << endl;
+				cout << "\n\t\t\t\t                                            per round (1-10)" << endl;
+				cout << "\n\t\t\t\t                           +++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+				cout << "\n\t\t\t\t                                                                              [0]Back to Play Menu" << endl;
+				cout << "\n\t\t\t\t                                          Your choice: ";
+				cin >> hearts;
+				if (hearts == 0)
+				{
+					display2();
+					goto play;
+				}
+				else if (hearts < 1 || hearts>10)
+				{
+					display2();
+					cout << "\n\t\t\t\t                                xxx||Error:Invalid Input.Try Again||xxx ";
+					goto divhearts;
+				}
+
+
+				do//to keep playing while hearts>0
+				{
+					system("cls"); //clears screen
+					display2();
+					i++; //variable to show how many times the loop was iterated and is also used to determine what question number it is.
+
+					//generates new number if existing numbers would result in a remainder:
+					srand(time(0));
+					do {
+						a = rand() % 100 + 1;
+						b = rand() % 100 + 1;
+					} while (a % b != 0);
+
+					//Used a loop to display amount of hearts:
+					heartsloop = hearts; //the number of hearts, is number of times you loop to display "o".
+					cout << "\n\t\t\t       Hearts: ";
+					do {
+						cout << 'o';
+						heartsloop--;
+					} while (heartsloop > 0);
+
+					//displays division question:
+					cout << "\n\t\t\t    +======================================================QUESTION " << i << "========================================================+\n";
+					cout << "\n\t\t\t    |                                                                                                                        |\n";
+					cout << "\n\t\t\t                                                            " << a << " / " << b << "                                                            \n";
+					cout << "\n\t\t\t    |                                                                                                                        |\n";
+					cout << "\n\t\t\t    +========================================================================================================================+\n";
+					cout << "\n\t\t\t\t                                                                                                 [0]Back to Main Menu" << endl;
+					cout << "\n\t\t\t\t                                          Your answer: ";
+					cin >> ans;
+					if (ans == 0) { //directs the user to mainmenu
+						display2();
+						goto mainmenu;
+					}
+					else if (ans != a / b)//lessens hearts when inputs wrong answer
+					{
+						hearts--;
+						losepoint--; //loses point in overall score
+					}
+				} while (hearts > 0);
+				//when loses
+				int choicelose;
+				system("cls"); //clears screen
+				cout << endl << endl << endl << endl << endl << endl << endl;
+
+			divlose://destination point when loses in division
+				cout << "\n\t\t\t                                                      ||YOUR SCORE:   " << i + losepoint << "  ||\n";  //displays score i is the number of iterations and losepoint is the number of points lost.
+				lose();//displays void lose.
+
+				//enables the user to go to play, mainmenu, or exits:
+				cout << "\n\t\t\t                                                                              [1]Play  [2]Back to Main Menu  [3]Exit ";
+				cout << "\n\t\t\t\t                                          Your choice: ";
+				cin >> choicelose;
+				switch (choicelose)
+				{
+				case 1://goes to play when input is 1
+				{
+					display2();
+					goto play;
+					break;
+				}
+				case 2://goes back to mainmenu when input is 2
+				{
+					display2();
+					goto mainmenu;
+					break;
+				}
+				case 3://goes to exits when input is 3
+				{
+					goto exits;
+					break;
+				}
+				default://displays error when input invalid
+				{
+					system("cls"); //clears screen
+					cout << endl << endl << endl << endl << endl << endl << endl;
+					cout << "\n\t\t\t                                              xxx||Error:Invalid Input.Try Again||xxx ";
+					goto divlose;
+					break;
+				}
+				}
+				break;
+			}
+		case 0://chooses back to mainmenu (in play)
+		{
+			display2();
+			goto mainmenu;
+			break;
+		}
+		default://shows error when input invalid (in play)
+		{
+			display2();
+			cout << "\n\t\t\t\t                                xxx||Error:Invalid Input.Try Again||xxx ";
+			goto play;
+			break;
+		}
+		}
+		break;
+		}
+
+	case 2://instructions
+	{
+		int choicethr;
+		display2();
+	instructions: //instructions destination point
+		instructions(); // displays void instructions
+		cout << "                                                             Your choice: ";
+		cin >> choicethr;
+
+		switch (choicethr) //to pick choice
+		{
+		case 1://goes to play when input is 1 (in instructions)
+		{
+			display2();
+			goto play;
+			break;
+		}
+		case 2://goes back to mainmeny when input is 2 (in instructions)
+		{
+			system("cls"); //clears screen
+			display2();
+			goto mainmenu;//jumps to mainmenu
+			break;
+		}
+		case 3://goes to exits when input is 3 (in instructions)
+		{
+			goto exits;//jumps to exits
+			break;
+		}
+		default://shows error when input invalid (in instructions)
+		{
+			display2();
+			cout << "\n\t\t\t                                             xxx||Error:Invalid Input.Try Again||xxx ";
+			goto instructions;
+			break;
+		}
+		}
+		break;
+	}
+	case 3://goes to exits when input is 3 (in mainmenu)
+	{
+	exits: //exits destination point
+		exits(); //displays void exits
+		break;
+	}
+	default:///shows error when input invalid (in mainmenu)
+	{
+		display2();
+		cout << "\n\t\t\t\t                                xxx||Error:Invalid Input.Try Again||xxx ";
+		goto mainmenu;//jumps back to mainmenu 
+		break;
+	}
+	}
+	}
+	return 0;
+}
+
+
+void display()//main header that uses string to have animated effect
+{
+	cout << endl << endl;
+	string var = "========================================================================================================================================================================"
+		"\n\n***********************************************************************************************************************************************************************\n"
+		"\n\t\t\t  MM      MM      AAAA      TTTTTTTTTT  HH     HH         WW      WW  IIIIIIIIII  ZZZZZZZZZZ      AAAA      RRRRRRRRR  DDDDDD       "
+		"\n\t\t\t  MMMM  MMMM     AA  AA         TT      HH     HH         WW      WW      II              ZZ     AA  AA     RR     RR  DD    DD      "
+		"\n\t\t\t  MM  MM  MM    AA    AA        TT      HHHHHHHHH         WW  WW  WW      II           ZZ       AA    AA    RRRRRRRRR  DD     DD   "
+		"\n\t\t\t  MM  MM  MM   AAAAAAAAAA       TT      HH     HH         WW  WW  WW      II        ZZ         AAAAAAAAAA   RR   RR    DD    DD  "
+		"\n\t\t\t  MM      MM  AA        AA      TT      HH     HH           WW  WW    IIIIIIIIII  ZZZZZZZZZZ  AA        AA  RR     RR  DDDDDD     "
+		"\n\n***********************************************************************************************************************************************************************\n"
+		"\n\n=======================================================================================================================================================================\n";
+	for (int i = 0; i < var.size(); i++)
+	{
+		Sleep(1);
+		cout << var[i];
+	}
+}
+void display2()//header
+{
+	system("cls"); //clears screen
+	cout << endl << endl;
+	cout << "========================================================================================================================================================================";
+	cout << "\n\n***********************************************************************************************************************************************************************\n";
+	cout << "\n\t\t\t  MM      MM      AAAA      TTTTTTTTTT  HH     HH         WW      WW  IIIIIIIIII  ZZZZZZZZZZ      AAAA      RRRRRRRRR  DDDDDD       ";
+	cout << "\n\t\t\t  MMMM  MMMM     AA  AA         TT      HH     HH         WW      WW      II              ZZ     AA  AA     RR     RR  DD    DD     ";
+	cout << "\n\t\t\t  MM  MM  MM    AA    AA        TT      HHHHHHHHH         WW  WW  WW      II           ZZ       AA    AA    RRRRRRRRR  DD     DD   ";
+	cout << "\n\t\t\t  MM  MM  MM   AAAAAAAAAA       TT      HH     HH         WW  WW  WW      II        ZZ         AAAAAAAAAA   RR   RR    DD    DD  ";
+	cout << "\n\t\t\t  MM      MM  AA        AA      TT      HH     HH           WW  WW    IIIIIIIIII  ZZZZZZZZZZ  AA        AA  RR     RR  DDDDDD     ";
+	cout << "\n\n***********************************************************************************************************************************************************************\n";
+	cout << "\n\n=======================================================================================================================================================================\n";
+}
+void instructions()//displays instructions
+{
+	cout << "\n\n\t\t\t          +========================================================================================================+\n";
+	cout << "\n\t\t\t          |                                               INSTRUCTIONS                                             |\n";
+	cout << "\n\t\t\t          |========================================================================================================|\n";
+	cout << "\n\t\t\t          |                          Test your math skills and see how much you would get right.                   |\n";
+	cout << "\n\t\t\t          |                                 Do you have what it takes to be a Math Wizard?                         |\n";
+	cout << "\n\t\t\t          |			             	Correctly answer the math questions.                               |\n";
+	cout << "\n\t\t\t          |                                   If you lose all of your hearts, game ends.                           |\n";
+	cout << "\n\t\t\t          +========================================================================================================+\n";
+	cout << "\n\t\t\t                                                                              [1]Play  [2]Back to Main Menu  [3]Exit ";
+}
+
+void exits()//display when exits and uses string to have animated effect
+{
+	system("cls"); //clears screen
+	cout << endl << endl << endl << endl << endl << endl << endl << endl;
+	string var = "========================================================================================================================================================================"
+		"\n\t\t\t	      TTTTTTT hh                      kk "
+		"\n\t\t\t		TTT   hh        aa aa nn nnn  kk  kk    yy   yy  oooo  uu   uu "
+		"\n\t\t\t		TTT   hhhhhh   aa aaa nnn  nn kkkkk     yy   yy oo  oo uu   uu "
+		"\n\t\t\t		TTT   hh   hh aa  aaa nn   nn kk kk      yyyyyy oo  oo uu   uu "
+		"\n\t\t\t		TTT   hh   hh  aaa aa nn   nn kk  kk         yy  oooo   uuuu u "
+		"\n\t\t\t		                                         yyyyy "
+		"\n\t\t\t		 fff                  PPPPPP  lll                 iii "
+		"\n\t\t\t		ff    oooo  rr rr     PP   PP lll   aa aa yy   yy     nn nnn   gggggg        ))) "
+		"\n\t\t\t		ffff oo  oo rrr  r    PPPPPP  lll  aa aaa yy   yy iii nnn  nn gg   gg    :::  ))) "
+		"\n\t\t\t		ff   oo  oo rr        PP      lll aa  aaa  yyyyyy iii nn   nn ggggggg         ))) "
+		"\n\t\t\t		ff    oooo  rr        PP      lll  aaa aa      yy iii nn   nn      gg    :::  ))) "
+		"\n\t\t\t	                                                   yyyyy               ggggg         ))) "
+		"\n\n=======================================================================================================================================================================\n";
+	for (int i = 0; i < var.size(); i++)
+	{
+		Sleep(1);
+		cout << var[i];
+	}
+}
+
+void lose()//display when loses
+{
+	cout << "========================================================================================================================================================================";
+	cout << "\n\n***********************************************************************************************************************************************************************\n";
+	cout << "\n\t\t\t                       //   ) )  // | |     /|    //| |     //   / /       //   ) ) ||   / / //   / /  //   ) )  ///     ";
+	cout << "\n\t\t\t                      //        //__| |    //|   // | |    //____         //   / /  ||  / / //____    //___/ /  ///      ";
+	cout << "\n\t\t\t                     //  ____  //___| |   // |  //  | |   //____         //   / /   || / / //____    //___ (   ///       ";
+	cout << "\n\t\t\t                    //    / / //    | |  //  | //   | |  //             //   / /    ||/ / //        //   | |             ";
+	cout << "\n\t\t\t                   ((____/ / //     | | //   |//    | | //____/ /      ((___/ /     |  / //____/ / //    | | ///         ";
+	cout << "\n\n***********************************************************************************************************************************************************************\n";
+	cout << "\n\n=======================================================================================================================================================================\n";
+
+}
